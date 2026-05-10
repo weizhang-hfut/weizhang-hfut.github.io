@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张维的科研主页 | Wei Zhang</title>
+    <style>
+        /* CSS 变量：方便一键切换主题 */
+        :root {
+            --primary-bg: #f4f7f6;
+            --section-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-sub: #576574;
+            --accent: #2980b9;
+            --header-bg: #2c3e50;
+            --nav-bg: #34495e;
+            --border-color: #eee;
+            --quote-bg: #f1f2f6;
+            --transition-speed: 0.3s;
+        }
+
+        /* 深色模式变量 */
+        [data-theme="dark"] {
+            --primary-bg: #1a1a1a;
+            --section-bg: #2d2d2d;
+            --text-main: #ecf0f1;
+            --text-sub: #bdc3c7;
+            --accent: #3498db;
+            --header-bg: #121212;
+            --nav-bg: #1e1e1e;
+            --border-color: #444;
+            --quote-bg: #3d3d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: white;
+            padding: 3rem 2rem; /* 调整内边距以适应 Logo */
+            text-align: center;
+        }
+
+        /* 头部 Logo 容器和样式 */
+        .header-content {
+            display: flex;
+            flex-direction: column; /* 移动端垂直堆叠 */
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .header-content {
+                flex-direction: row; /* 较大屏幕水平排列 */
+                justify-content: center;
+                text-align: left;
+            }
+        }
+
+        .uni-logo {
+            max-height: 80px; /* 调整 Logo 高度 */
+            width: auto;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 0.2rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        nav a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        /* 主题切换按钮样式 */
+        .theme-toggle {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 2rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            background-color: var(--section-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            color: var(--accent);
+        }
+
+        h2::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: var(--border-color);
+            margin-left: 1.5rem;
+        }
+
+        /* “关于我”部分的照片布局 */
+        .about-flex-container {
+            display: flex;
+            flex-direction: column; /* 移动端垂直堆叠 */
+            gap: 2rem;
+            align-items: center; /* 居中照片 */
+        }
+
+        @media (min-width: 768px) {
+            .about-flex-container {
+                flex-direction: row; /* 在较大屏幕上照片和文本并排 */
+                align-items: flex-start; /* 顶部对齐照片和文本 */
+            }
+        }
+
+        .about-text-content {
+            flex: 1; /* 占据剩余空间 */
+        }
+
+        .about-photo {
+            max-width: 250px; /* 限制照片最大宽度，防止太大 */
+            width: 100%; /* 移动端拉伸至容器宽度 */
+            height: auto;
+            border-radius: 12px; /* 柔和边角 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            object-fit: cover; /* 确保照片在容器中正确显示 */
+        }
+
+        .quote-box {
+            background-color: var(--quote-bg);
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .tag-container {
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            display: inline-block;
+        }
+
+        .achievement-card {
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: var(--primary-bg);
+            margin-bottom: 1rem; /* 增加下方间距，分隔多篇论文 */
+        }
+
+        .timeline-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .time-label {
+            font-weight: bold;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* 针对移动端的优化 */
+        @media (max-width: 600px) {
+            section { padding: 1.5rem; }
+            header h1 { font-size: 2rem; }
+            nav { flex-wrap: wrap; }
+            .theme-toggle { margin-left: 0; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <img src="logo.png" class="uni-logo" alt="合肥工业大学 Logo">
+            <div>
+                <h1>张维 | Wei Zhang</h1>
+                <p>合肥工业大学管理学院 · 工商管理学博士生</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#about">简介</a>
+        <a href="#research">方向</a>
+        <a href="#achievements">成果</a>
+        <a href="#future">规划</a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 切换主题</button>
+    </nav>
+
+    <div class="container">
+        <section id="about">
+            <h2>关于我</h2>
+            <div class="about-flex-container">
+                <div class="about-text-content">
+                    <p>我是张维，一名专注于创新管理与人工智能协同的科研工作者。我目前在合肥工业大学攻读工商管理学博士学位。</p>
+                    <div class="quote-box">
+                        “致良知”是我核心的生存与研究哲学。我致力于在人工智能时代寻找技术进步与人性发展之间的平衡点，助推人全面而自由的发展，让人工智能造福人类社会。
+                    </div>
+                    <p>学术技能：Python 数据挖掘、大模型驱动研究、SmartPLS 结构方程模型、SPSS数据分析、Zotero 知识重构。</p>
+                </div>
+                <img src="living photo.jpg" class="about-photo" alt="张维的个人生活照片">
+            </div>
+        </section>
+
+        <section id="research">
+            <h2>研究兴趣</h2>
+            <p><strong>核心方向：人 + AI 实现创新</strong></p>
+            <ul style="margin-top: 1rem; list-style-position: inside;">
+                <li>面向交叉创新的多智能体交互系统构建。</li>
+                <li>人机协同中的信任演化与交互机制。</li>
+                <li>企业生态系统中的“颠覆性创新”战略研究。</li>
+            </ul>
+            <div class="tag-container">
+                <span class="tag">#创新管理</span>
+                <span class="tag">#人机协作</span>
+                <span class="tag">#决策科学</span>
+            </div>
+        </section>
+
+        <section id="achievements">
+            <h2>代表成果</h2>
+            <div class="achievement-card">
+                <strong style="color: var(--accent);">[论文在审]</strong>
+                <p style="margin-top: 0.5rem;"><em>How leader enterprises select complementors for a mission-oriented innovation ecosystem?</em></p>
+                <p style="font-size: 0.9rem; color: var(--text-sub);">
+                    投递期刊：IEEE Transactions on Engineering Management (Monthly, IF: 5.7)<br>
+                    第二作者
+                </p>
+            </div>
+            
+            <div class="achievement-card">
+                <strong style="color: var(--accent);">[论文在写]</strong>
+                <p style="margin-top: 0.5rem;"><em>Agentic AI vs. Instrumental AI: Which Is the Better Innovation Collaborator?</em></p>
+                <p style="font-size: 0.9rem; color: var(--text-sub);">
+                    目标期刊：Computers in Human Behavior<br>
+                    第二作者
+                </p>
+            </div>
+        </section>
+
+        <section id="future">
+            <h2>未来计划</h2>
+            <div class="timeline-item">
+                <span class="time-label">2026 - 打下研究基础</span>
+                <p>完成课程学习，发表手头已有数据的两篇论文，开展下一个研究。</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time-label">2027 - 出国联合培养</span>
+                <p>申请前往新加坡一流学府进行为期一年的博士联合培养，深化国际学术交流。发表学术论文，完成毕业论文。</p>
+            </div>
+            <div class="timeline-item" style="padding-bottom: 0;">
+                <span class="time-label">2029 - 毕业归乡建设</span>
+                <p>博士毕业，返回家乡贵州。将创新管理理论转化为区域发展的实践动力，推动家乡经济的“颠覆性创新”。</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>欢迎联系我相互交流  邮箱18811789386@163.com</p>
+        <p>© 2026 张维 - 基于 AI 辅助设计 · 驱动管理创新</p>
+    </footer>
+
+    <script>
+        // 切换深色/浅色模式的逻辑
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // 初始化时检测用户之前的偏好
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+        };
+    </script>
+</body>
+</html>
